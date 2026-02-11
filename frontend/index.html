@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Interview Simulator</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h1>Interviewer AI</h1>
+            <p class="subtitle">Elevate your interview game with AI-driven feedback</p>
+        </header>
+
+        <main>
+            <!-- Setup Section -->
+            <div id="setup-area">
+                <div class="setup-grid">
+                    <div class="input-group">
+                        <label for="company">Company</label>
+                        <input type="text" id="company" placeholder="e.g. Google, Startup">
+                    </div>
+                    <div class="input-group">
+                        <label for="position">Position</label>
+                        <input type="text" id="position" placeholder="e.g. Frontend Engineer">
+                    </div>
+                    <div class="input-group">
+                        <label for="difficulty">Difficulty</label>
+                        <select id="difficulty">
+                            <option value="Intern">Intern</option>
+                            <option value="Junior">Junior</option>
+                            <option value="Intermediate" selected>Intermediate</option>
+                            <option value="Senior">Senior</option>
+                        </select>
+                    </div>
+                </div>
+                <button id="start-btn" class="btn" style="width: 100%;">
+                    <span>Start Mock Interview</span>
+                </button>
+            </div>
+
+            <div id="interview-area">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                    <div id="timer" style="font-family: monospace; font-size: 1.25rem; color: var(--primary);">00:00
+                    </div>
+                    <div id="session-info" class="subtitle" style="font-size: 0.875rem;"></div>
+                </div>
+                <div class="question-card">
+                    <label>Interviewer says:</label>
+                    <p id="current-question" style="font-size: 1.125rem; margin-top: 0.5rem; line-height: 1.6;">Welcome!
+                        Let's get started.</p>
+                </div>
+
+                <div class="controls">
+                    <button id="record-btn" class="btn">
+                        <span class="status-dot"></span>
+                        <span id="record-text">Record Answer</span>
+                    </button>
+                    <button id="stop-btn" class="btn secondary" disabled>
+                        Stop & Submit
+                    </button>
+                </div>
+
+                <div id="feedback-area" style="display: none;">
+                    <div id="warning-box"
+                        style="display: none; background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.2); padding: 1rem; border-radius: 12px; margin-bottom: 1rem; color: #f87171;">
+                        <strong>⚠️ Professionalism Alert:</strong> <span id="warning-text"></span>
+                    </div>
+
+                    <div class="question-card"
+                        style="background: rgba(16, 185, 129, 0.05); border-color: rgba(16, 185, 129, 0.2);">
+                        <label style="color: #10b981;">Coach's Feedback:</label>
+                        <p id="coach-text" style="margin-top: 0.5rem;"></p>
+                    </div>
+
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-value" id="score-tech">-</div>
+                            <div class="stat-label">Technical</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="score-clarity">-</div>
+                            <div class="stat-label">Clarity</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="score-structure">-</div>
+                            <div class="stat-label">Structure</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="score-confidence">-</div>
+                            <div class="stat-label">Confidence</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="app.js"></script>
+</body>
+
+</html>
