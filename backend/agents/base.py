@@ -22,7 +22,7 @@ def get_openai_client():
         return None
 
 client = None
-DEFAULT_MODEL = os.getenv("NVIDIA_MODEL_NAME", "gpt-4o-mini")
+DEFAULT_MODEL = os.getenv("NVIDIA_MODEL_NAME", "nvidia/nemotron-3-nano-30b-a3b:free")
 
 class BaseAgent:
     def __init__(self, system_prompt: str):

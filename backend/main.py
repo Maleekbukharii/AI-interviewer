@@ -41,7 +41,7 @@ os.makedirs(AUDIO_DIR, exist_ok=True)
 @app.post("/start-interview")
 def start_interview(data: InterviewStart, db: Session = Depends(get_db)):
     sm = SessionManager(db)
-    session = sm.create_session(data.company, data.position, data.difficulty)
+    session = sm.create_session(data.company, data.position, data.difficulty, data.question_limit)
     
     context = f"Company: {data.company}, Position: {data.position}, Difficulty: {data.difficulty}"
     first_question = interviewer.get_next_question(history="", context=context)
@@ -75,6 +75,17 @@ def submit_answer(data: UserAnswer, db: Session = Depends(get_db)):
     sm.update_history(session.id, f"User: {data.answer_text}\n")
     sm.log_turn(session.id, last_question, data.answer_text, eval_result)
     
+    # Check if we should conclude the interview
+    logs = sm.get_logs(session.id)
+    if len(logs) >= session.question_limit:
+        final_eval = evaluator.get_final_evaluation(session.history)
+        return {
+            "evaluation": eval_result,
+            "coach_feedback": coaching_feedback,
+            "next_question": "The interview is now complete. Thank you!",
+            "final_evaluation": final_eval
+        }
+
     context = f"Company: {session.company}, Position: {session.position}, Difficulty: {session.difficulty}"
     next_question = interviewer.get_next_question(history=session.history, context=context)
     
@@ -160,6 +171,25 @@ async def process_audio_turn(
         sm.update_history(session.id, f"User: {user_text}\n")
         sm.log_turn(session.id, last_question, user_text, eval_result)
         
+        # Check if we should conclude the interview
+        logs = sm.get_logs(session.id)
+        if len(logs) >= session.question_limit:
+            final_eval = evaluator.get_final_evaluation(session.history)
+            
+            # Speak final message
+            filename = f"speech_{uuid.uuid4()}.wav"
+            speech_output = os.path.join(AUDIO_DIR, filename)
+            await generate_audio("The interview is now complete. Thank you!", speech_output)
+            
+            return {
+                "user_text": user_text,
+                "evaluation": eval_result,
+                "coach_feedback": coaching_feedback,
+                "next_question": "The interview is now complete. Thank you!",
+                "audio_url": f"/audio/{filename}",
+                "final_evaluation": final_eval
+            }
+
         context = f"Company: {session.company}, Position: {session.position}, Difficulty: {session.difficulty}"
         next_question = interviewer.get_next_question(history=session.history, context=context)
         sm.update_history(session.id, f"Interviewer: {next_question}\n")

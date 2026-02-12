@@ -39,6 +39,10 @@
                             <option value="Senior">Senior</option>
                         </select>
                     </div>
+                    <div class="input-group">
+                        <label for="question-limit">Questions</label>
+                        <input type="number" id="question-limit" value="5" min="1" max="20">
+                    </div>
                 </div>
                 <button id="start-btn" class="btn" style="width: 100%;">
                     <span>Start Mock Interview</span>
@@ -47,13 +51,14 @@
 
             <div id="interview-area">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-                    <div id="timer" style="font-family: monospace; font-size: 1.25rem; color: var(--primary);">00:00
+                    <div id="timer" style="font-family: monospace; font-size: 1.25rem; color: var(--text);">00:00
                     </div>
                     <div id="session-info" class="subtitle" style="font-size: 0.875rem;"></div>
                 </div>
                 <div class="question-card">
                     <label>Interviewer says:</label>
-                    <p id="current-question" style="font-size: 1.125rem; margin-top: 0.5rem; line-height: 1.6;">Welcome!
+                    <p id="current-question"
+                        style="font-size: 1.25rem; margin-top: 1rem; line-height: 1.6; font-weight: 500;">Welcome!
                         Let's get started.</p>
                 </div>
 
@@ -67,16 +72,15 @@
                     </button>
                 </div>
 
-                <div id="feedback-area" style="display: none;">
+                <div id="feedback-area" style="display: none; margin-top: 2rem;">
                     <div id="warning-box"
-                        style="display: none; background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.2); padding: 1rem; border-radius: 12px; margin-bottom: 1rem; color: #f87171;">
-                        <strong>⚠️ Professionalism Alert:</strong> <span id="warning-text"></span>
+                        style="display: none; background: rgba(255, 255, 255, 0.05); border: 1px solid var(--border); padding: 1.25rem; border-radius: 16px; margin-bottom: 1.5rem; color: var(--text);">
+                        <strong>Professionalism Alert:</strong> <span id="warning-text"></span>
                     </div>
 
-                    <div class="question-card"
-                        style="background: rgba(16, 185, 129, 0.05); border-color: rgba(16, 185, 129, 0.2);">
-                        <label style="color: #10b981;">Coach's Feedback:</label>
-                        <p id="coach-text" style="margin-top: 0.5rem;"></p>
+                    <div class="question-card" style="margin-bottom: 2rem;">
+                        <label style="color: var(--text-muted);">Coach Perspective:</label>
+                        <div id="coach-text" style="margin-top: 1rem; line-height: 1.6;"></div>
                     </div>
 
                     <div class="stats-grid">
@@ -98,6 +102,36 @@
                         </div>
                     </div>
                 </div>
+            </div>
+
+            <!-- Result Section -->
+            <div id="result-area">
+                <header style="margin-bottom: 2rem;">
+                    <h2 style="font-size: 2.5rem; letter-spacing: -0.05em;">Interview Report</h2>
+                    <p class="subtitle">Comprehensive performance summary</p>
+                </header>
+
+                <div class="stats-grid" style="margin-bottom: 2rem;">
+                    <div class="stat-card">
+                        <div class="stat-value" id="final-score" style="font-size: 3rem;">-</div>
+                        <div class="stat-label">Overall Performance</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="hiring-chances" style="font-size: 3rem;">-</div>
+                        <div class="stat-label">Hiring Potential</div>
+                    </div>
+                </div>
+
+                <div class="question-card" style="margin-bottom: 2rem;">
+                    <div class="report-section">
+                        <h3>Overall Performance Summary</h3>
+                        <div id="final-summary"></div>
+                    </div>
+                </div>
+
+                <button onclick="window.location.reload()" class="btn" style="width: 100%;">
+                    <span>Start New Session</span>
+                </button>
             </div>
         </main>
     </div>

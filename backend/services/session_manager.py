@@ -6,13 +6,14 @@ class SessionManager:
     def __init__(self, db: Session):
         self.db = db
 
-    def create_session(self, company: str, position: str, difficulty: str):
+    def create_session(self, company: str, position: str, difficulty: str, question_limit: int):
         session_id = str(uuid.uuid4())
         new_session = InterviewSession(
             id=session_id,
             company=company,
             position=position,
             difficulty=difficulty,
+            question_limit=question_limit,
             history=""
         )
         self.db.add(new_session)

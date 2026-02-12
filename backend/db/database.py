@@ -19,6 +19,7 @@ class InterviewSession(Base):
     company = Column(String)
     position = Column(String)
     difficulty = Column(String)
+    question_limit = Column(Integer, default=5)
     history = Column(Text, default="") # Store as a simple string or JSON string
 
 class InterviewLog(Base):

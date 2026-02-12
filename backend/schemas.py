@@ -11,10 +11,16 @@ class Evaluation(BaseModel):
     weaknesses: str
     improvement_plan: str
 
+class FinalEvaluation(BaseModel):
+    total_score: int
+    hiring_chances: str
+    summary: str
+
 class InterviewStart(BaseModel):
     company: Optional[str] = "General"
     position: Optional[str] = "Software Engineer"
     difficulty: Optional[str] = "Intermediate"
+    question_limit: Optional[int] = 5
 
 class InterviewSession(BaseModel):
     session_id: str

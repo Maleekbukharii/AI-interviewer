@@ -1,5 +1,5 @@
 from .base import BaseAgent
-from ..schemas import Evaluation
+from ..schemas import Evaluation, FinalEvaluation
 
 EVALUATOR_PROMPT = """
 You are an expert Interview Evaluator. 
@@ -25,3 +25,16 @@ class Evaluator(BaseAgent):
     def evaluate_answer(self, question: str, answer: str):
         prompt = f"Question: {question}\nUser Answer: {answer}\n\nPlease evaluate this response."
         return self.chat(prompt, response_model=Evaluation)
+
+    def get_final_evaluation(self, history: str):
+        prompt = f"""
+        Based on the following interview history, provide a final evaluation of the candidate.
+        History:
+        {history}
+
+        Provide:
+        - total_score (0-100)
+        - hiring_chances (a percentage or a descriptive string, e.g., "High", "85%")
+        - summary (a brief overall summary of their performance)
+        """
+        return self.chat(prompt, response_model=FinalEvaluation)
